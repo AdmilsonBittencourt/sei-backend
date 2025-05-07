@@ -4,5 +4,6 @@ export interface TurmaDTO{
     horario: string,
     id_sala: number,
     id_professor: number,
-    id_disciplina: number
+    id_disciplina: number,
+    ativo: boolean
 }
