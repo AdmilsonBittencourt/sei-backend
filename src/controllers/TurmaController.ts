@@ -6,6 +6,7 @@ const service = new TurmaService;
 export class TurmaController {
   async create(req: Request, res: Response) {
     const result = await service.create(req.body);
+    console.log(req.body);
     return res.status(201).json(result);
   }
 

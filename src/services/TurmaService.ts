@@ -8,13 +8,13 @@ export class TurmaService {
 
   async create(data: Partial<TurmaDTO>) {
     const [disciplina, professor, localsala] = await Promise.all([
-      DisciplinaRepository.findOne({where: {id: data.disciplinaId}}),
-      ProfessorRepository.findOne({where: {id: data.professorId}}),
-      LocalSalaRepository.findOne({where: {id: data.salaId}}),
+      DisciplinaRepository.findOne({where: {id: data.id_disciplina}}),
+      ProfessorRepository.findOne({where: {id: data.id_professor}}),
+      LocalSalaRepository.findOne({where: {id: data.id_sala}}),
     ])
-    if(!disciplina) throw new Error('Disciplina not fund');
-    if(!professor) throw new Error('Professor not fund');
-    if(!localsala) throw new Error('LocalSala not fund');
+    if(!disciplina) throw new Error('Disciplina not found');
+    if(!professor) throw new Error('Professor not found');
+    if(!localsala) throw new Error('LocalSala not found');
 
     const turma = TurmaRepository.create({
       ...data, 
@@ -30,9 +30,9 @@ export class TurmaService {
     if(!turma) throw new Error('turma not fund');
 
     const [disciplina, professor, localsala] = await Promise.all([
-      DisciplinaRepository.findOne({where: {id: data.disciplinaId}}),
-      ProfessorRepository.findOne({where: {id: data.professorId}}),
-      LocalSalaRepository.findOne({where: {id: data.salaId}}),
+      DisciplinaRepository.findOne({where: {id: data.id_disciplina}}),
+      ProfessorRepository.findOne({where: {id: data.id_professor}}),
+      LocalSalaRepository.findOne({where: {id: data.id_sala}}),
     ]);
     
     if(turma.codigo != data.codigo){
