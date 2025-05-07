@@ -1,19 +1,33 @@
 import { Request, Response } from "express";
-import { DisciplinaService } from "../services/DisciplinaService";
+import { DisciplinaService, DisciplinaValidationError } from "../services/DisciplinaService";
 
 const service = new DisciplinaService;
 
 export class DisciplinaController {
 
   async create(req: Request, res: Response) {
-    const result = await service.create(req.body);
-    return res.status(201).json(result);
+    try {
+      const result = await service.create(req.body);
+      return res.status(201).json(result);
+    } catch (error) {
+      if (error instanceof DisciplinaValidationError) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
   }
 
   async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const result = await service.update(Number(id), req.body);
-    return res.json(result);
+    try {
+      const { id } = req.params;
+      const result = await service.update(Number(id), req.body);
+      return res.json(result);
+    } catch (error) {
+      if (error instanceof DisciplinaValidationError) {
+        return res.status(400).json({ error: error.message });
+      }
+      return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
   }
 
   async delete(req: Request, res: Response) {
